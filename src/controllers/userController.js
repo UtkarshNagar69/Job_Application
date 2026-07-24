@@ -133,9 +133,9 @@ const loginUser = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ msg: "internal Server Error" });
   }
-  //Update
-  //Delete
-  //
 };
+//Update
+  
+//Delete
 
 module.exports = { createUser, loginUser };

@@ -9,6 +9,20 @@ const userRoute = require("./routes/userRoute");
 
 const app = express();
 
+// let middleware1 = (req, res, next) => {
+//   console.log("Middleware1");
+//   // res.send("req. Ended")
+//   next();
+// };
+// let middleware2 = (req, res, next) => {
+//   console.log("Middleware2");
+//   // res.send("req. Ended")
+//   next();
+// };
+
+// app.use(middleware1);
+// app.use(middleware2);
+
 app.use(express.json());
 app.use("/users", userRoute);
 dBConnection();

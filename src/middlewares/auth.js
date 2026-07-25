@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     }
     token = token.split(" ")[1];
 
-    jwt.verify(process.env.JWT_SECRET_KEY, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decodedToken) => {
       if (err) {
         return res.status(401).json({
           msg: " Invalid or Expired Token",
@@ -23,3 +23,5 @@ const auth = async (req, res, next) => {
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 };
+
+module.exports = auth;

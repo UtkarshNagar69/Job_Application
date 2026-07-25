@@ -61,11 +61,9 @@ const createUser = async (req, res) => {
       return res.status(400).json({ msg: "Password is Required" });
     }
     if (!isValidPassword(password)) {
-      return res
-        .status(400)
-        .json({
-          msg: "Password must be 8-20 chars with Uppercase, LowerCase,numbes and Special Characters",
-        });
+      return res.status(400).json({
+        msg: "Password must be 8-20 chars with Uppercase, LowerCase,numbes and Special Characters",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -107,11 +105,9 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ msg: "Password is Required" });
     }
     if (!isValidPassword(password)) {
-      return res
-        .status(400)
-        .json({
-          msg: "Password must be 8-20 chars with Uppercase, LowerCase,numbes and Special Characters.",
-        });
+      return res.status(400).json({
+        msg: "Password must be 8-20 chars with Uppercase, LowerCase,numbes and Special Characters.",
+      });
     }
 
     let passwordCheck = await bcrypt.compare(password, user.password);
@@ -134,8 +130,41 @@ const loginUser = async (req, res) => {
     return res.status(500).json({ msg: "internal Server Error" });
   }
 };
-//Update
-  
-//Delete
 
-module.exports = { createUser, loginUser };
+//Get My Profile
+const getProfile = async (req, res) => {
+  try {
+    let userId = req.userId;
+
+    let user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ msg: "User Not Found" });
+    }
+
+    return res.status(200).json({ msg: "Profile Fetched Successfully", user });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({ msg: " Internal Server Error" });
+  }
+};
+
+// Delete User
+const deleteUser = async (req, res) => {
+  try {
+    let userId = req.userId;
+    let deleteUser = await UserModel.findByIdAndDelete(userId);
+
+    if (!deleteUser) {
+      return res
+        .status(404)
+        .json({ msg: " User Not Found or Already Deleted" });
+    }
+    return res.status(200).json({ msg: " User Deleted Successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: " Internal Server Error" });
+  }
+};
+
+module.exports = { createUser, loginUser, getProfile, deleteUser };

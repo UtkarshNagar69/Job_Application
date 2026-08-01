@@ -14,6 +14,6 @@ router.post("/create", auth, createJob);
 router.get("/getJobs", auth, getAllJobs);
 router.get("/job-detail/:id", auth, getJobById);
 router.delete("/delete/:id", auth, authorizeJob, deleteJob);
-
+router.put("update/:id", auth, authorizeJob, updateJob);
 
 module.exports = router;
